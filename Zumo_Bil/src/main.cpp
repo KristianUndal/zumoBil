@@ -14,6 +14,7 @@ void setup() {
   Serial.begin(9600);
 
   knappA.waitForPress();
+  Serial.println("######################");
 
   delay(1000);
   for(uint16_t i = 0; i < 120; i++)
@@ -33,7 +34,30 @@ void setup() {
 }
 
 void loop() {
- if(sumLinjesensorer(linjesensor, 5) > 3000){
-  buzzer.play("a");
+  //Serial.println("PingPingPing");
+
+  //Serial.println(paMarkering(linjesensor, 5));
+  switch (paMarkering(linjesensor, 5))
+  {
+    case INGEN:
+      //buzzer.stopPlaying();
+      break;
+
+    case LADESTASJON:
+      buzzer.play("C");
+      break;
+
+    case SAKTE:
+      buzzer.play("g");
+      break;
+
+    case LYSKRYSS:
+      buzzer.play(">c");
+      break;
+ 
+    default:
+      //buzzer.stopPlaying();
+      break;
  }
+
 }

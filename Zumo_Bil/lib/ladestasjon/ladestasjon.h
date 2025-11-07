@@ -8,7 +8,18 @@ Ladestasjon library for Zumo32u4
 #include <Arduino.h>
 #include <Zumo32u4.h>
 
-//Returnerer en sum av alle verdiene lest av linjesensoren
-unsigned int sumLinjesensorer(Zumo32U4LineSensors &_linjesensor, int antallSensorer);
+enum veimarkering{
+    INGEN,
+    LADESTASJON,
+    SAKTE,
+    LYSKRYSS
+};
+
+
+//Returnerer hvilken veimarkering bilen står på. Typer: INGEN, LADESTASJON, SAKTE, LYSKRYSS
+veimarkering paMarkering(Zumo32U4LineSensors &_linjesensor, int antallSensorer, unsigned int forsinkelse = 100, unsigned int grenseverdi = 400);
+
+//Returnerer om linjesensoren står ovenfor et kryss eller ikke
+bool paKryss(Zumo32U4LineSensors &_linjesensor, int antallSensorer, unsigned int grenseverdi = 3000);
 
 #endif
