@@ -1,31 +1,35 @@
 #include "battery.h"
-#include <Arduino.h>
 
-#define driveCost 1
-#define idleCost 1
-#define idleTime 1000
+Zumo32U4OLED display;
+Zumo32U4Encoders encoders;
 
-int batteryCharge = fullBattery;
+
+volatile double batteryCharge = FULL_BATTERY;
 int batteryPercentage = 100;
 
 unsigned long lastIdleUpdate = 0;
 
 // Update battery charge when wheel encoders move, interrupts loop()
 void driveBattery() {
-    batteryCharge -= driveCost;
+    int leftEncoder = encoders.getCountsAndResetLeft();
+    int rightEncoder = encoders.getCountsAndResetRight();
+    
+    int encodersCount = abs(leftEncoder) + abs(rightEncoder);
+    batteryCharge -= encodersCount * DRIVE_COST;
 }
 
 // Update battery charge based on elapsed time
-void idleBattery(unsigned long elapsedTime) {
-    if (elapsedTime > lastIdleUpdate + idleTime) {
+void idleBattery() {
+    // Subtracts IDLE_COST from batteryCharge if IDLE_TIME has passed since last update.
+    if (elapsedTime > (lastIdleUpdate + IDLE_TIME)) {
         lastIdleUpdate = elapsedTime;
-        batteryCharge -= idleCost;
+        batteryCharge -= IDLE_COST;
     }
 }
 
 void calculatePercentage() {
     // Calculate percentage from current charge and fullBattery value
-    int newPercentage = round(100*batteryCharge/fullBattery);
+    int newPercentage = round(100*batteryCharge/FULL_BATTERY);
     // If percentage has changed, update value and screen
     if (batteryPercentage != newPercentage) {
         batteryPercentage = newPercentage;
@@ -35,11 +39,25 @@ void calculatePercentage() {
 }
 
 void updateScreen() {
-
+    // Clear the screen
+    display.clear();
+    
+    // Print a batteryCPercentage to screen
+    display.print(String(batteryPercentage) + "%");
 }
 
 
-void updateBattery(unsigned long elapsedTime) {
-    idleBattery(elapsedTime);
+void updateBattery() {
+    // Subtracts IDLE_COST from batteryCharge every IDLE_TIME ms
+    idleBattery();
+    // Subtracts DRIVE_COST from batteryCharge for every encoder pulse
+    driveBattery();
+
+    // Stops battery charge from going below zero
+    if (batteryCharge < 0) {
+        batteryCharge = 0;
+    }
+
+    // Calculate percentage from batteryCharge and update screen when changed
     calculatePercentage();
 }
