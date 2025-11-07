@@ -20,6 +20,7 @@ void spinAndCalibrate(){
         else{
             motors.setSpeeds(-200, 200);
         }
+        
         lineSensors.calibrate();
         delay(10);
     }
