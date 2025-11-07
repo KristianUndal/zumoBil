@@ -12,17 +12,7 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  elapsedTime = millis();
-<<<<<<< Updated upstream
-}
-
-// put function definitions here:hei 
-int myFunction(int x, int y) {
-  return x + y;
-}
-=======
-  
+  elapsedTime = millis();  
 }
 
 // put function definitions here:
->>>>>>> Stashed changes
