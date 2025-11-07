@@ -1,21 +1,39 @@
 #include <Arduino.h>
+#include <Zumo32u4.h>
+#include <ladestasjon.h>
 
-unsigned long elapsedTime = 0;
+Zumo32U4LineSensors linjesensor;
+Zumo32U4Motors motors;
+Zumo32U4ButtonA knappA;
+Zumo32U4Buzzer buzzer;
 
-// put function declarations here:
-int myFunction(int, int);
 
 void setup() {
   // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+  linjesensor.initFiveSensors();
+  Serial.begin(9600);
+
+  knappA.waitForPress();
+
+  delay(1000);
+  for(uint16_t i = 0; i < 120; i++)
+  {
+    if (i > 30 && i <= 90)
+    {
+      motors.setSpeeds(-200, 200);
+    }
+    else
+    {
+      motors.setSpeeds(200, -200);
+    }
+
+    linjesensor.calibrate();
+  }
+  motors.setSpeeds(0, 0);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  elapsedTime = millis();
-}
-
-// put function definitions here:hei 
-int myFunction(int x, int y) {
-  return x + y;
+ if(sumLinjesensorer(linjesensor, 5) > 3000){
+  buzzer.play("a");
+ }
 }
