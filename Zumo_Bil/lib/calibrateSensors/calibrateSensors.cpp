@@ -5,9 +5,6 @@
 Zumo32U4LineSensors lineSensors;
 Zumo32U4Motors motors;
 
-#define NUM_SENSORS 5
-unsigned int lineSensorValues[NUM_SENSORS];
-
 void initSensors(){
     lineSensors.initFiveSensors();
 }
