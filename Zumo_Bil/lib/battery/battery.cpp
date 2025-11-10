@@ -1,8 +1,8 @@
 #include "battery.h"
 
+// ZUMO library functions
 Zumo32U4OLED display;
 Zumo32U4Encoders encoders;
-
 
 volatile double batteryCharge = FULL_BATTERY;
 int batteryPercentage = 100;

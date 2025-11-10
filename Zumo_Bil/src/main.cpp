@@ -16,5 +16,6 @@ void loop() {
   // Elapsed time since start of program
   elapsedTime = millis();
 
+  // Update battery state
   updateBattery();
 }
