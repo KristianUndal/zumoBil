@@ -21,7 +21,7 @@ void initObstacleModule() {
 }
 
 // Read front proximity sensors and return sum of left and right hits
-uint8_t readFrontProximitySum() {
+static uint8_t readFrontProximitySum() {
   prox.read();
   uint8_t leftHits  = prox.countsFrontWithLeftLeds();
   uint8_t rightHits = prox.countsFrontWithRightLeds();
@@ -33,16 +33,16 @@ void setDesiredSpeeds(int leftSpeed, int rightSpeed) {
     currentRightSpeed = rightSpeed;
 }
 
-void startMotorsNow(int leftSpeed, int rightSpeed) {
+static void startMotorsNow(int leftSpeed, int rightSpeed) {
     motors.setSpeeds(leftSpeed, rightSpeed);
 }
 
-void stopMotorsNow() {
+static void stopMotorsNow() {
     motors.setSpeeds(0, 0);
 }
 
 // Decide whether to stop or start motors based on proximity sensor readings
-bool shouldBeStopped(uint8_t proxSum, bool currentlyStopped) {
+static bool shouldBeStopped(uint8_t proxSum, bool currentlyStopped) {
     if (!currentlyStopped) {
         return proxSum >= STOP_THRESHOLD;
     }
