@@ -1,41 +1,54 @@
 #include "battery.h"
-#include <Arduino.h>
 
-#define driveCost 1
-#define idleCost 1
-#define idleTime 1000
+// ZUMO library functions
+Zumo32U4OLED display;
+Zumo32U4Encoders encoders;
 
-int batteryCharge = fullBattery;
+// Set battery charge to full at start of program
+volatile double batteryCharge = FULL_BATTERY;
+// Set battery percentage to full at start of program
 int batteryPercentage = 100;
 
+// Last time of idleBattery() update
 unsigned long lastIdleUpdate = 0;
 
 // Update battery charge when wheel encoders move, interrupts loop()
 void driveBattery() {
-    batteryCharge -= driveCost;
+    int leftEncoder = encoders.getCountsAndResetLeft();
+    int rightEncoder = encoders.getCountsAndResetRight();
+    
+    int encodersCount = abs(leftEncoder) + abs(rightEncoder);
+    batteryCharge -= encodersCount * DRIVE_COST_ROTATION/900;
 }
 
 // Update battery charge based on elapsed time
-void idleBattery(unsigned long elapsedTime) {
-    if (elapsedTime > lastIdleUpdate + idleTime) {
+void idleBattery() {
+    // Subtracts IDLE_COST from batteryCharge if IDLE_TIME has passed since last update.
+    if (elapsedTime > (lastIdleUpdate + IDLE_TIME)) {
         lastIdleUpdate = elapsedTime;
-        batteryCharge -= idleCost;
+        batteryCharge -= IDLE_COST_MINUTE/60;
     }
 }
 
-void calculatePercentage() {
+void displayBatteryPercentage() {
     // Calculate percentage from current charge and fullBattery value
-    int newPercentage = round(100*batteryCharge/fullBattery);
+    int newPercentage = round(100*batteryCharge/FULL_BATTERY);
     // If percentage has changed, update value and screen
     if (batteryPercentage != newPercentage) {
         batteryPercentage = newPercentage;
+        batteryString = String(batteryPercentage) + "%";
+        
         // Update screen
-        updateScreen();
+        updateScreen(batteryString);
     }
 }
 
-void updateScreen() {
-
+void updateScreen(std::string str) {
+    // Clear the screen
+    display.clear();
+    
+    // Print a batteryCPercentage to screen
+    display.print(String(str));
 }
 
 

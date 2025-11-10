@@ -3,10 +3,13 @@
 #include <Zumo32U4.h>
 #include "proximitySensors.h"
 
-
+unsigned long elapsedTime = 0;
 
 void setup() {
-  initObstacleModule();
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+
+  displayBatteryPercentage();
 }
 
 void loop() {
