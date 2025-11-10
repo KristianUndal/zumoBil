@@ -9,6 +9,11 @@ void setup() {
 }
 
 void loop() {
+  // Elapsed time since start of program
+  elapsedTime = millis();
+
+  // Update battery state
+  updateBattery();
  updateObstacle();
  delay(5);
 }
