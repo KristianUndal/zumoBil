@@ -39,7 +39,17 @@ void updateScreen() {
 }
 
 
-void updateBattery(unsigned long elapsedTime) {
-    idleBattery(elapsedTime);
-    calculatePercentage();
+void updateBattery() {
+    // Subtracts IDLE_COST from batteryCharge every IDLE_TIME ms
+    idleBattery();
+    // Subtracts DRIVE_COST from batteryCharge for every encoder pulse
+    driveBattery();
+
+    // Stops battery charge from going below zero
+    if (batteryCharge < 0) {
+        batteryCharge = 0;
+    }
+
+    // Update battery percentage on screen
+    displayBatteryPercentage();
 }

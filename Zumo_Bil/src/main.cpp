@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include "battery.h"
 #include <Zumo32U4.h>
 #include "proximitySensors.h"
 

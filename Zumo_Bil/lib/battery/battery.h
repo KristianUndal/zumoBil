@@ -15,6 +15,7 @@ void calculatePercentage();
 
 void updateScreen();
 
+// Runs all functions above to update battery state and display
 void updateBattery();
 
 #endif // BATTERY_H_INCLUDED
