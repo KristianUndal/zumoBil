@@ -13,7 +13,7 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  // Elapsed time since start of program
   elapsedTime = millis();
 
   updateBattery();

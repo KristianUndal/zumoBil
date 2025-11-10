@@ -15,7 +15,7 @@ void driveBattery() {
     int rightEncoder = encoders.getCountsAndResetRight();
     
     int encodersCount = abs(leftEncoder) + abs(rightEncoder);
-    batteryCharge -= encodersCount * DRIVE_COST;
+    batteryCharge -= encodersCount * DRIVE_COST_ROTATION/900;
 }
 
 // Update battery charge based on elapsed time
@@ -23,27 +23,29 @@ void idleBattery() {
     // Subtracts IDLE_COST from batteryCharge if IDLE_TIME has passed since last update.
     if (elapsedTime > (lastIdleUpdate + IDLE_TIME)) {
         lastIdleUpdate = elapsedTime;
-        batteryCharge -= IDLE_COST;
+        batteryCharge -= IDLE_COST_MINUTE/60;
     }
 }
 
-void calculatePercentage() {
+void displayBatteryPercentage() {
     // Calculate percentage from current charge and fullBattery value
     int newPercentage = round(100*batteryCharge/FULL_BATTERY);
     // If percentage has changed, update value and screen
     if (batteryPercentage != newPercentage) {
         batteryPercentage = newPercentage;
+        batteryString = String(batteryPercentage) + "%";
         // Update screen
-        updateScreen();
+
+        updateScreen(batteryString);
     }
 }
 
-void updateScreen() {
+void updateScreen(std::string str) {
     // Clear the screen
     display.clear();
     
     // Print a batteryCPercentage to screen
-    display.print(String(batteryPercentage) + "%");
+    display.print(String(str));
 }
 
 
@@ -59,5 +61,5 @@ void updateBattery() {
     }
 
     // Calculate percentage from batteryCharge and update screen when changed
-    calculatePercentage();
+    displayBatteryPercentage();
 }
