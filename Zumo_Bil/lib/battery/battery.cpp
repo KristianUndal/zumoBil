@@ -4,9 +4,12 @@
 Zumo32U4OLED display;
 Zumo32U4Encoders encoders;
 
+// Set battery charge to full at start of program
 volatile double batteryCharge = FULL_BATTERY;
+// Set battery percentage to full at start of program
 int batteryPercentage = 100;
 
+// Last time of idleBattery() update
 unsigned long lastIdleUpdate = 0;
 
 // Update battery charge when wheel encoders move, interrupts loop()
@@ -34,8 +37,8 @@ void displayBatteryPercentage() {
     if (batteryPercentage != newPercentage) {
         batteryPercentage = newPercentage;
         batteryString = String(batteryPercentage) + "%";
+        
         // Update screen
-
         updateScreen(batteryString);
     }
 }
