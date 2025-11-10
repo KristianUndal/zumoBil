@@ -1,21 +1,14 @@
 #include <Arduino.h>
+#include <Zumo32U4.h>
+#include "proximitySensors.h"
 
-unsigned long elapsedTime = 0;
 
-// put function declarations here:
-int myFunction(int, int);
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+  initObstacleModule();
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  elapsedTime = millis();
-}
-
-// put function definitions here:hei 
-int myFunction(int x, int y) {
-  return x + y;
+ updateObstacle();
+ delay(10);
 }

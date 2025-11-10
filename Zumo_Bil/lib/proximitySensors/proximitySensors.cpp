@@ -1,6 +1,5 @@
 #include <Arduino.h>
 #include <Zumo32U4.h>
-#include <Wire.h>
 #include "proximitySensors.h"
 
 #define STOP_THRESHOLD 3
@@ -9,7 +8,7 @@
 #define DEFAULT_RIGHT_SPEED 100
 
 extern Zumo32U4Motors motors;
-extern Zumo32U4ProximitySensors prox;
+Zumo32U4ProximitySensors prox;
 
 int currentLeftSpeed = DEFAULT_LEFRT_SPEED;
 int currentRightSpeed = DEFAULT_RIGHT_SPEED;
@@ -51,7 +50,7 @@ static bool shouldBeStopped(uint8_t proxSum, bool currentlyStopped) {
     }
 }
 
-void updateObstacle(unsigned long elapsedTime) {
+void updateObstacle() {
     uint8_t proxSum = readFrontProximitySum();
     bool mustStop = shouldBeStopped(proxSum, isStopped);
 
