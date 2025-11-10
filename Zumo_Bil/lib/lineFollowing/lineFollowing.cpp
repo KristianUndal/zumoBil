@@ -7,7 +7,7 @@ extern Zumo32U4LineSensors lineSensors;
 extern Zumo32U4Motors motors;
 
 #define MIDDLE_OF_LINE 2000
-#define BASE_SPEED 100
+#define BASE_SPEED 400
 #define NUM_SENSORS 5
 unsigned int lineSensorValues[NUM_SENSORS]; 
 
@@ -15,28 +15,39 @@ int error;
 int lastError = 0;
 
 //endre disse for å tune styringen
-#define PROPORTIONAL_CONSTANT 1/10
-#define DERIVATIVE_CONSTANT 60
+#define PROPORTIONAL_CONSTANT 0.25
+#define DERIVATIVE_CONSTANT 6
 
 static void readSensors(){
-    int position = lineSensors.readLine(lineSensorValues);
+    //tall mellom 0 og 4000
+    int position = lineSensors.readLine(lineSensorValues); 
+    //tall mellom -2000 og 2000
     error = position - MIDDLE_OF_LINE;
 }
 
+
 static int directionChange(){
-    readSensors();
     //PID kontrolleringsformel
     int value = PROPORTIONAL_CONSTANT*error + DERIVATIVE_CONSTANT*(error - lastError);
     lastError = error;
     return value;
 }
 
-void adjustDirection(){
-    int newLeft = BASE_SPEED + directionChange();
-    int newRight = BASE_SPEED - directionChange();
+void followLine(){
+    readSensors();
+    int speedDifference = directionChange();
 
-    int leftSpeed = constrain(newLeft, 0, BASE_SPEED);
-    int rightSpeed = constrain(newRight, 0, BASE_SPEED);
+    int leftSpeed = BASE_SPEED + speedDifference;
+    int rightSpeed = BASE_SPEED - speedDifference;
 
+    leftSpeed = constrain(leftSpeed,0,BASE_SPEED);
+    rightSpeed = constrain(rightSpeed,0,BASE_SPEED);
     motors.setSpeeds(leftSpeed, rightSpeed);
+    /*
+    int leftSpeed = BASE_SPEED + directionChange();
+    int rightSpeed = BASE_SPEED - directionChange();
+    leftSpeed = constrain(leftSpeed, 0, BASE_SPEED);
+    rightSpeed = constrain(rightSpeed, 0, BASE_SPEED);
+
+    motors.setSpeeds(leftSpeed, rightSpeed);*/
 }
