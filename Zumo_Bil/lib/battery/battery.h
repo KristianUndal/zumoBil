@@ -32,7 +32,7 @@ void idleBattery();
 void displayBatteryPercentage();
 
 // Write string to screen
-void updateScreen(std::string str);
+void updateScreen(char str[]);
 
 // Runs all functions above to update battery state and display
 void updateBattery();

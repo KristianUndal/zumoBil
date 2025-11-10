@@ -1,5 +1,7 @@
 #include <Arduino.h>
 #include "battery.h"
+#include "proximitySensors.h"
+
 
 unsigned long elapsedTime = 0;
 
