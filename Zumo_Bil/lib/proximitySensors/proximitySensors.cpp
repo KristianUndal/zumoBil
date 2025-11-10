@@ -8,8 +8,8 @@
 #define DEFAULT_LEFRT_SPEED 100
 #define DEFAULT_RIGHT_SPEED 100
 
-Zumo32U4Motors motors;
-Zumo32U4ProximitySensors prox;
+extern Zumo32U4Motors motors;
+extern Zumo32U4ProximitySensors prox;
 
 int currentLeftSpeed = DEFAULT_LEFRT_SPEED;
 int currentRightSpeed = DEFAULT_RIGHT_SPEED;
