@@ -43,11 +43,4 @@ void followLine(){
     leftSpeed = constrain(leftSpeed,0,BASE_SPEED);
     rightSpeed = constrain(rightSpeed,0,BASE_SPEED);
     motors.setSpeeds(leftSpeed, rightSpeed);
-    /*
-    int leftSpeed = BASE_SPEED + directionChange();
-    int rightSpeed = BASE_SPEED - directionChange();
-    leftSpeed = constrain(leftSpeed, 0, BASE_SPEED);
-    rightSpeed = constrain(rightSpeed, 0, BASE_SPEED);
-
-    motors.setSpeeds(leftSpeed, rightSpeed);*/
 }
