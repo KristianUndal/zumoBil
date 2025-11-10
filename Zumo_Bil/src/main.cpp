@@ -16,4 +16,6 @@ void loop() {
 
   // Update battery state
   updateBattery();
+ updateObstacle();
+ delay(5);
 }

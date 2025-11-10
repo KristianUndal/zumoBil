@@ -3,8 +3,8 @@
 #include <Wire.h>
 #include "proximitySensors.h"
 
-#define STOP_THRESHOLD 3
-#define RELEASE_THRESHOLD 2
+#define STOP_THRESHOLD 10
+#define RELEASE_THRESHOLD 7
 #define DEFAULT_LEFRT_SPEED 100
 #define DEFAULT_RIGHT_SPEED 100
 
