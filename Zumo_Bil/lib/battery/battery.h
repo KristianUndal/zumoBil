@@ -31,8 +31,11 @@ void idleBattery();
 // Calculate percentage from batteryCharge, and write to screen
 void displayBatteryPercentage();
 
+// Clear screen
+void clearScreen();
+
 // Write string to screen
-void updateScreen(std::string str);
+void updateScreen(std::string str, int line);
 
 // Runs all functions above to update battery state and display
 void updateBattery();

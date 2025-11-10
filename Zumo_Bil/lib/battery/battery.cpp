@@ -36,16 +36,20 @@ void displayBatteryPercentage() {
     // If percentage has changed, update value and screen
     if (batteryPercentage != newPercentage) {
         batteryPercentage = newPercentage;
-        batteryString = String(batteryPercentage) + "%";
+        std::string batteryString = "battery: " + String(batteryPercentage) + "%";
         
         // Update screen
-        updateScreen(batteryString);
+        writeToScreen(batteryString, 0);
     }
 }
 
-void updateScreen(std::string str) {
-    // Clear the screen
+void clearScreen() {
     display.clear();
+}
+
+void writeToScreen(std::string str, int line) {
+    // Clear the screen
+    display.gotoXY(0, line);
     
     // Print a batteryCPercentage to screen
     display.print(String(str));

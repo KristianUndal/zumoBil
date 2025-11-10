@@ -3,6 +3,8 @@
 #include <Zumo32U4.h>
 #include "proximitySensors.h"
 
+// Merged with battery branch
+
 unsigned long elapsedTime = 0;
 
 void setup() {
@@ -18,6 +20,6 @@ void loop() {
 
   // Update battery state
   updateBattery();
- updateObstacle();
- delay(5);
+  updateObstacle();
+  delay(5);
 }
