@@ -63,6 +63,6 @@ void updateBattery() {
         batteryCharge = 0;
     }
 
-    // Calculate percentage from batteryCharge and update screen when changed
+    // Update battery percentage on screen
     displayBatteryPercentage();
 }

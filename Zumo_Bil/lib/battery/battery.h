@@ -34,7 +34,7 @@ void displayBatteryPercentage();
 // Write string to screen
 void updateScreen(std::string str);
 
-// Runs all functions above to update battery state
+// Runs all functions above to update battery state and display
 void updateBattery();
 
 #endif // __BATTERY__
