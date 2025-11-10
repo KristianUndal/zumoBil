@@ -10,5 +10,5 @@ void setup() {
 
 void loop() {
  updateObstacle();
- delay(10);
+ delay(5);
 }
