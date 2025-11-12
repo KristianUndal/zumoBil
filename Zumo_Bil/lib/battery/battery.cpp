@@ -1,5 +1,6 @@
 #include "battery.h"
 
+
 // ZUMO library functions
 Zumo32U4OLED display;
 Zumo32U4Encoders encoders;
@@ -36,7 +37,7 @@ void displayBatteryPercentage() {
     // If percentage has changed, update value and screen
     if (batteryPercentage != newPercentage) {
         batteryPercentage = newPercentage;
-        std::string batteryString = "battery: " + String(batteryPercentage) + "%";
+        String batteryString = "battery: " + String(batteryPercentage) + "%";
         
         // Update screen
         writeToScreen(batteryString, 0);
@@ -47,7 +48,7 @@ void clearScreen() {
     display.clear();
 }
 
-void writeToScreen(std::string str, int line) {
+void writeToScreen(String str, int line) {
     // Clear the screen
     display.gotoXY(0, line);
     
