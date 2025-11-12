@@ -4,12 +4,12 @@
 
 #define STOP_THRESHOLD 10
 #define RELEASE_THRESHOLD 7
-#define DEFAULT_LEFRT_SPEED 100
+#define DEFAULT_LEFT_SPEED 100
 #define DEFAULT_RIGHT_SPEED 100
 
 
 
-int currentLeftSpeed = DEFAULT_LEFRT_SPEED;
+int currentLeftSpeed = DEFAULT_LEFT_SPEED;
 int currentRightSpeed = DEFAULT_RIGHT_SPEED;
 bool isStopped = false;
 

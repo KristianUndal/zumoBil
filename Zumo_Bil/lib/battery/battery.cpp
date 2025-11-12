@@ -1,14 +1,15 @@
 #include "battery.h"
 
 
-// ZUMO library functions
-Zumo32U4OLED display;
-Zumo32U4Encoders encoders;
+/*
+Disse er i headerfilen definert som extern, og forventer da at variablene settes i en annen fil. Jeg 
+har bare kommentert de vekk, men de erklæres i headerfilen og initsialiseres i main.cpp
+*/
 
 // Set battery charge to full at start of program
-volatile double batteryCharge = FULL_BATTERY;
+//volatile double batteryCharge = FULL_BATTERY;
 // Set battery percentage to full at start of program
-int batteryPercentage = 100;
+//int batteryPercentage = 100;
 
 // Last time of idleBattery() update
 unsigned long lastIdleUpdate = 0;
