@@ -17,9 +17,9 @@ enum veimarkering{
 
 
 //Returnerer hvilken veimarkering bilen står på. Typer: INGEN, LADESTASJON, SAKTE, LYSKRYSS
-veimarkering paMarkering(Zumo32U4LineSensors &_linjesensor, int antallSensorer, unsigned int forsinkelse = 100, unsigned int grenseverdi = 400);
+veimarkering paMarkering(Zumo32U4LineSensors &_linjesensor, int antallSensorer, unsigned int forsinkelse, unsigned int grenseverdi);
 
 //Returnerer om linjesensoren står ovenfor et kryss eller ikke
-bool paKryss(Zumo32U4LineSensors &_linjesensor, int antallSensorer, unsigned int grenseverdi = 3000);
+bool paKryss(Zumo32U4LineSensors &_linjesensor, int antallSensorer, unsigned int grenseverd);
 
 #endif

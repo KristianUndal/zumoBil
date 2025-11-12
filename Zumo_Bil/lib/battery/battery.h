@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 #include <Zumo32U4.h>
-#include <string>
+
 
 // Battery variables
 // Maximal battery level
@@ -34,8 +34,11 @@ void displayBatteryPercentage();
 // Clear screen
 void clearScreen();
 
+// Write to screen
+void writeToScreen(String str, int line);
+
 // Write string to screen
-void updateScreen(std::string str, int line);
+void updateScreen(String str, int line);
 
 // Runs all functions above to update battery state and display
 void updateBattery();

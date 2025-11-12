@@ -1,14 +1,6 @@
-#include <Arduino.h>
-#include <Zumo32u4.h>
+#include "ladestasjon.h"
 
 unsigned long kontaktMedVeimarkering = 0;  //Tidspunktet bilen først merker en veimarkering
-
-enum veimarkering{
-    INGEN,
-    LADESTASJON,
-    SAKTE,
-    LYSKRYSS
-};
 
 
 
@@ -83,7 +75,7 @@ bool paKryss(Zumo32U4LineSensors &_linjesensor, int antallSensorer, unsigned int
     unsigned int linjeVerdier[antallSensorer];
 
     _linjesensor.read(linjeVerdier);
-    int sum = 0;
+    unsigned int sum = 0;
 
     for(int i = 0; i < antallSensorer; i++){
         sum += linjeVerdier[i];
