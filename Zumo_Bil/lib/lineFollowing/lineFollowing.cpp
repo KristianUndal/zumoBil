@@ -1,9 +1,12 @@
 #include "lineFollowing.h"
 
+#ifndef BASE_SPEED
+#define BASE_SPEED 100
+#endif
 
 #define MIDDLE_OF_LINE 2000
-#define BASE_SPEED 100
 #define NUM_SENSORS 5
+
 unsigned int lineSensorValues[NUM_SENSORS]; 
 
 int error;

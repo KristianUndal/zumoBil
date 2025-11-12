@@ -7,13 +7,24 @@
 
 // Battery variables
 // Maximal battery level
+#ifndef FULL_BATTERY
 #define FULL_BATTERY 100.0
+#endif
+
 // Battery cost of driving, percentage per wheel rotation
+#ifndef DRIVE_COST_ROTATION
 #define DRIVE_COST_ROTATION 1.0
+#endif
+
 // Battery cost of running, percentage per minute
+#ifndef IDLE_COST_MINUTE
 #define IDLE_COST_MINUTE 60.0
+#endif
+
 // Idle cost time interval, 1 second
+#ifndef IDLE_TIME
 #define IDLE_TIME 1000
+#endif
 
 // Elapsed time since start of program, global variable
 extern unsigned long elapsedTime;
