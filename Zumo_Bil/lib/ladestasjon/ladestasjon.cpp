@@ -4,7 +4,7 @@ unsigned long kontaktMedVeimarkering = 0;  //Tidspunktet bilen først merker en 
 
 
 
-veimarkering paMarkering(Zumo32U4LineSensors &_linjesensor, int antallSensorer, unsigned int forsinkelse = 100, unsigned int grenseverdi = 400){
+veimarkering paMarkering(Zumo32U4LineSensors &_linjesensor, int antallSensorer, unsigned int forsinkelse, unsigned int grenseverdi){
     unsigned int linjeVerdier[antallSensorer];
     _linjesensor.read(linjeVerdier);
 
