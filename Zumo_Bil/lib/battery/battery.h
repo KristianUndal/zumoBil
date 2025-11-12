@@ -34,6 +34,9 @@ void displayBatteryPercentage();
 // Clear screen
 void clearScreen();
 
+// Write to screen
+void writeToScreen(String str, int line);
+
 // Write string to screen
 void updateScreen(String str, int line);
 

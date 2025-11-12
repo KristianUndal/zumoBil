@@ -2,9 +2,6 @@
 #include <Zumo32U4.h>
 #include "calibrateSensors.h"
 
-Zumo32U4LineSensors lineSensors;
-Zumo32U4Motors motors;
-
 void initSensors(){
     lineSensors.initFiveSensors();
 }
