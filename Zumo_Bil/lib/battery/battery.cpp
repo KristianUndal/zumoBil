@@ -51,7 +51,4 @@ void updateBattery() {
     if (batteryCharge < 0) {
         batteryCharge = 0;
     }
-
-    // Update battery percentage on screen
-    displayBatteryPercentage();
 }
