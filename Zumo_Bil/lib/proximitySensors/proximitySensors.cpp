@@ -1,12 +1,13 @@
 #include <Arduino.h>
 #include <Zumo32U4.h>
 #include "proximitySensors.h"
+#include "display.h"
+#include "battery.h"
 
-#define STOP_THRESHOLD 10
-#define RELEASE_THRESHOLD 7
+#define STOP_THRESHOLD 11
+#define RELEASE_THRESHOLD 10
 #define DEFAULT_LEFT_SPEED 100
 #define DEFAULT_RIGHT_SPEED 100
-
 
 
 int currentLeftSpeed = DEFAULT_LEFT_SPEED;
@@ -41,10 +42,15 @@ static void stopMotorsNow() {
 
 // Decide whether to stop or start motors based on proximity sensor readings
 static bool shouldBeStopped(uint8_t proxSum, bool currentlyStopped) {
+    if (batteryCharge == 0) {
+        return true; // Stopp hvis batteriet er tomt
+    }
     if (!currentlyStopped) {
+        writeToScreen(String(proxSum), 1);
         return proxSum >= STOP_THRESHOLD;
     }
     else {
+        writeToScreen("STOPPED", 1);
         return (proxSum >= RELEASE_THRESHOLD);
     }
 }

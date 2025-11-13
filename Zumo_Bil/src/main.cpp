@@ -5,6 +5,10 @@
 
 // Merged with battery branch
 
+Zumo32U4ProximitySensors prox;
+Zumo32U4OLED display;
+Zumo32U4Buzzer buzz;
+
 unsigned long elapsedTime = 0;
 
 void setup() {
@@ -12,6 +16,7 @@ void setup() {
   Serial.begin(9600);
 
   displayBatteryPercentage();
+  initObstacleModule();
 }
 
 void loop() {
@@ -21,5 +26,5 @@ void loop() {
   // Update battery state
   updateBattery();
   updateObstacle();
-  delay(5);
+  delay(25);
 }

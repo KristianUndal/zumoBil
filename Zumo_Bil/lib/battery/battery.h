@@ -45,15 +45,6 @@ void idleBattery();
 // Calculate percentage from batteryCharge, and write to screen
 void displayBatteryPercentage();
 
-// Clear screen
-void clearScreen();
-
-// Write to screen
-void writeToScreen(String str, int line);
-
-// Write string to screen
-void updateScreen(String str, int line);
-
 // Runs all functions above to update battery state and display
 void updateBattery();
 
