@@ -1,7 +1,13 @@
 #include <Arduino.h>
 #include "battery.h"
 #include "proximitySensors.h"
+#include "display.h"
 
+int leftEncoderCount = 0;
+int rightEncoderCount = 0;
+
+// ZUMO objects
+Zumo32U4Encoders encoders;
 
 unsigned long elapsedTime = 0;
 
@@ -15,9 +21,10 @@ void setup() {
 void loop() {
   // Elapsed time since start of program
   elapsedTime = millis();
+  leftEncoderCount = encoders.getCountsAndResetRight();
+  rightEncoderCount =  encoders.getCountsAndResetLeft();
 
   // Update battery state
   updateBattery();
- updateObstacle(elapsedTime);
- delay(5);
+  writeToScreen(String(elapsedTime), 1);
 }

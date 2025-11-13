@@ -4,10 +4,12 @@
 #include <Arduino.h>
 #include <Zumo32U4.h>
 
+extern Zumo32U4OLED display;
+
 // Clear screen
 void clearScreen();
 
 // Write string to screen
-void updateScreen(String str, int line);
+void writeToScreen(String str, int line);
 
 #endif

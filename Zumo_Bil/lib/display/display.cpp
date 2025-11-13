@@ -1,7 +1,5 @@
 #include "display.h"
 
-Zumo32U4OLED display;
-
 void clearScreen() {
     // Clear screen
     display.clear();
