@@ -1,11 +1,17 @@
 #include <Arduino.h>
+#include "battery.h"
 #include <Zumo32U4.h>
 #include "proximitySensors.h"
 
+// Merged with battery branch
 
+unsigned long elapsedTime = 0;
 
 void setup() {
-  initObstacleModule();
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+
+  displayBatteryPercentage();
 }
 
 void loop() {
@@ -14,6 +20,6 @@ void loop() {
 
   // Update battery state
   updateBattery();
- updateObstacle();
- delay(5);
+  updateObstacle();
+  delay(5);
 }
