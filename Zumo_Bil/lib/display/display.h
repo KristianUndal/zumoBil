@@ -4,6 +4,8 @@
 #include <Arduino.h>
 #include <Zumo32U4.h>
 
+extern Zumo32U4OLED display;
+
 // Clear screen
 void clearScreen();
 

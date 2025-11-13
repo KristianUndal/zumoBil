@@ -1,4 +1,5 @@
 #include "battery.h"
+#include "display.h"
 
 
 /*
@@ -38,23 +39,11 @@ void displayBatteryPercentage() {
     // If percentage has changed, update value and screen
     if (batteryPercentage != newPercentage) {
         batteryPercentage = newPercentage;
-        String batteryString = "battery: " + String(batteryPercentage) + "%";
+        String batteryString = String(batteryPercentage) + "%";
         
         // Update screen
         writeToScreen(batteryString, 0);
     }
-}
-
-void clearScreen() {
-    display.clear();
-}
-
-void writeToScreen(String str, int line) {
-    // Clear the screen
-    display.gotoXY(0, line);
-    
-    // Print a batteryCPercentage to screen
-    display.print(String(str));
 }
 
 
