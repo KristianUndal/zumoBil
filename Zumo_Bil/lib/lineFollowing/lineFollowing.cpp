@@ -29,12 +29,12 @@ static int directionChange(){
     return value;
 }
 
-void adjustDirection(){
-    int newLeft = BASE_SPEED + directionChange();
-    int newRight = BASE_SPEED - directionChange();
+void adjustDirection(int max_speed){
+    int newLeft = max_speed + directionChange();
+    int newRight = max_speed - directionChange();
 
-    int leftSpeed = constrain(newLeft, 0, BASE_SPEED);
-    int rightSpeed = constrain(newRight, 0, BASE_SPEED);
+    int leftSpeed = constrain(newLeft, 0, max_speed);
+    int rightSpeed = constrain(newRight, 0, max_speed);
 
     motors.setSpeeds(leftSpeed, rightSpeed);
 }
