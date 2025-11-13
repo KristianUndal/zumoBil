@@ -1,7 +1,7 @@
 #include "battery.h"
+#include "display.h"
 
-// ZUMO library functions
-Zumo32U4OLED display;
+// ZUMO library encoder function
 Zumo32U4Encoders encoders;
 
 // Set battery charge to full at start of program
@@ -36,21 +36,12 @@ void displayBatteryPercentage() {
     // If percentage has changed, update value and screen
     if (batteryPercentage != newPercentage) {
         batteryPercentage = newPercentage;
-        batteryString = String(batteryPercentage) + "%";
+        String batteryString = String(batteryPercentage) + "%";
         
         // Update screen
-        updateScreen(batteryString);
+        updateScreen(batteryString, 0);
     }
 }
-
-void updateScreen(std::string str) {
-    // Clear the screen
-    display.clear();
-    
-    // Print a batteryCPercentage to screen
-    display.print(String(str));
-}
-
 
 void updateBattery() {
     // Subtracts IDLE_COST from batteryCharge every IDLE_TIME ms

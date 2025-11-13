@@ -3,7 +3,6 @@
 
 #include <Arduino.h>
 #include <Zumo32U4.h>
-#include <string>
 
 // Battery variables
 // Maximal battery level
@@ -30,9 +29,6 @@ void idleBattery();
 
 // Calculate percentage from batteryCharge, and write to screen
 void displayBatteryPercentage();
-
-// Write string to screen
-void updateScreen(char str[]);
 
 // Runs all functions above to update battery state and display
 void updateBattery();

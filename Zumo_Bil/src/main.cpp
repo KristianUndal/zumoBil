@@ -18,6 +18,6 @@ void loop() {
 
   // Update battery state
   updateBattery();
- updateObstacle();
+ updateObstacle(elapsedTime);
  delay(5);
 }
