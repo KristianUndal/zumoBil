@@ -1,17 +1,21 @@
 #include <Arduino.h>
 #include <Zumo32U4.h>
 #include "proximitySensors.h"
+#include "display.h"
+#include "battery.h"
+#include "buzzer.h"
 
-#define STOP_THRESHOLD 10
-#define RELEASE_THRESHOLD 7
+#define STOP_THRESHOLD 11
+#define RELEASE_THRESHOLD 10
 #define DEFAULT_LEFT_SPEED 100
 #define DEFAULT_RIGHT_SPEED 100
-
 
 
 int currentLeftSpeed = DEFAULT_LEFT_SPEED;
 int currentRightSpeed = DEFAULT_RIGHT_SPEED;
 bool isStopped = false;
+
+unsigned long lastBuzzerTime = 0;
 
 // Initialize proximity sensor
 void initObstacleModule() {
@@ -41,10 +45,15 @@ static void stopMotorsNow() {
 
 // Decide whether to stop or start motors based on proximity sensor readings
 static bool shouldBeStopped(uint8_t proxSum, bool currentlyStopped) {
+    if (batteryCharge == 0) {
+        return true; // Stopp hvis batteriet er tomt
+    }
     if (!currentlyStopped) {
+        writeToScreen(String(proxSum), 1);
         return proxSum >= STOP_THRESHOLD;
     }
     else {
+        writeToScreen("STOPPED", 1);
         return (proxSum >= RELEASE_THRESHOLD);
     }
 }
@@ -52,7 +61,7 @@ static bool shouldBeStopped(uint8_t proxSum, bool currentlyStopped) {
 void updateObstacle() {
     uint8_t proxSum = readFrontProximitySum();
     bool mustStop = shouldBeStopped(proxSum, isStopped);
-
+    
     if (mustStop && !isStopped) {
         stopMotorsNow();
         isStopped = true;
@@ -63,6 +72,13 @@ void updateObstacle() {
     }
     else if (!mustStop && !isStopped) {
         startMotorsNow(currentLeftSpeed, currentRightSpeed);
+        if (proxSum > 5) {
+        int buzzFreq = 1000/((proxSum-5)*2);
+        if (elapsedTime > (lastBuzzerTime + buzzFreq)) {
+        lastBuzzerTime = elapsedTime;
+        activateBuzzer();
+        }
+    }
     }
 }
 
