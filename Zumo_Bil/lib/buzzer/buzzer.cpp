@@ -3,6 +3,11 @@
 #include "buzzer.h"
 
 
-void activateBuzzer(int frequency, int duration) {
-    buzz.playFrequency(frequency, duration);
+void activateBuzzer() {
+    buzz.playFrequency(600, 50, 15);
 }
+
+void stopSound() {
+    buzz.stopPlaying();
+}
+

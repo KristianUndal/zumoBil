@@ -3,6 +3,7 @@
 #include "proximitySensors.h"
 #include "display.h"
 #include "battery.h"
+#include "buzzer.h"
 
 #define STOP_THRESHOLD 11
 #define RELEASE_THRESHOLD 10
@@ -13,6 +14,8 @@
 int currentLeftSpeed = DEFAULT_LEFT_SPEED;
 int currentRightSpeed = DEFAULT_RIGHT_SPEED;
 bool isStopped = false;
+
+unsigned long lastBuzzerTime = 0;
 
 // Initialize proximity sensor
 void initObstacleModule() {
@@ -58,7 +61,7 @@ static bool shouldBeStopped(uint8_t proxSum, bool currentlyStopped) {
 void updateObstacle() {
     uint8_t proxSum = readFrontProximitySum();
     bool mustStop = shouldBeStopped(proxSum, isStopped);
-
+    
     if (mustStop && !isStopped) {
         stopMotorsNow();
         isStopped = true;
@@ -69,6 +72,13 @@ void updateObstacle() {
     }
     else if (!mustStop && !isStopped) {
         startMotorsNow(currentLeftSpeed, currentRightSpeed);
+        if (proxSum > 5) {
+        int buzzFreq = 1000/((proxSum-5)*2);
+        if (elapsedTime > (lastBuzzerTime + buzzFreq)) {
+        lastBuzzerTime = elapsedTime;
+        activateBuzzer();
+        }
+    }
     }
 }
 
