@@ -88,7 +88,7 @@ void loop() {
   // All linjefølging håndteres av denne funksjonen. Den deaktiveres et øyeblikk mens vi svinger av veien for 
   // å ikke skape problemer 
   if((elapsedTime - ladeSvingTid) > 500){
-    adjustDirection();
+    followLine();
   } else{
     // Dersom vi skal lade vil vi kun svinge til høyre frem til vi har gjort en 90* sving. Det gjør vi ved å
     // kun kjøre venstrehjulet til rotary-encoderen har målt en 90* sving. Antall klikk i en 90* sving finner vi ut ved testing
