@@ -45,23 +45,27 @@ unsigned long sistAvstandsmaling = 0;
 
 // Lading
 bool skalLade = false;
-unsigned int ladeSvingTid = 0; // Når vi startet å svinge for å kjøre til lading. Stopper linjefølging et øyeblikk for å svinge av veien feilfritt
+unsigned long ladeSvingTid = 0; // Når vi startet å svinge for å kjøre til lading. Stopper linjefølging et øyeblikk for å svinge av veien feilfritt
 int antallStegISving = 0;
 int ladeGrense = 95;
+unsigned long skjermtid = 0;
+unsigned long sving = 0;
 
 void setup() {
   Serial.begin(9600);
   
   // Vi bruker fem linjesensorer
   lineSensors.initFiveSensors();
+  initObstacleModule();
 
   // Venter med kalibrasjon til brukeren trykker knappen 
   writeToScreen("Trykk A for å kalibrere", 0);
   buttonA.waitForButton();
+  clearScreen();
   delay(1000); // Venter litt etter brukeren har sluppet knappen. Delay er helt ok i setup for ingenting annet skal skje
 
   spinAndCalibrate();
-  buzzer.play("AAA"); // Varsel om at roboten er ferdig kalibrert
+  buzzer.play("MSAAA"); // Varsel om at roboten er ferdig kalibrert
   delay(1500); // Pause for sikkerhets skyld
 
 }
@@ -87,34 +91,41 @@ void loop() {
 
   // All linjefølging håndteres av denne funksjonen. Den deaktiveres et øyeblikk mens vi svinger av veien for 
   // å ikke skape problemer 
-  if((elapsedTime - ladeSvingTid) > 500){
+  if((elapsedTime - ladeSvingTid) > 1500){
     followLine();
-  } else{
-    // Dersom vi skal lade vil vi kun svinge til høyre frem til vi har gjort en 90* sving. Det gjør vi ved å
-    // kun kjøre venstrehjulet til rotary-encoderen har målt en 90* sving. Antall klikk i en 90* sving finner vi ut ved testing
-    antallStegISving += encoders.getCountsAndResetLeft();
-
-    if(antallStegISving > KLIKK_I_SVING){
-      motors.setSpeeds(0, 0); // Vi har svingt nok, stans og vent til linjefølgerkoden tar over
-    }
   }
+
+  
+
   
 
   // Veimarkeringer 
-  switch (paMarkering(lineSensors, 5)) {
+  switch (paMarkering(lineSensors, 5, 25)) {
   
   case LADESTASJON:
+
     if(skalLade){ // Dersom vi allerede er på vei til en ladestasjon
       while(batteryCharge < ladeGrense){ // Alt vi gjør er å lade. Blokkerende kode er OK
+        motors.setSpeeds(0, 0);
         batteryCharge++;
         displayBatteryPercentage();
-        delay(500); 
+        delay(200); 
       }
+
       skalLade = false;
 
-    }else{ // Om vi ikke enda er på vei til en ladestasjon oppdaterer vi skalLade og svinger til høyre
+    }else if(batteryCharge < 20){ // Om vi ikke enda er på vei til en ladestasjon oppdaterer vi skalLade og svinger til høyre
+      //Ikke ødelegg motoren. Vi hardkoder her for å unngå at den stanser umiddelbart og lader på samme strek
+
+      motors.setSpeeds(0, 0);
+      buzzer.play("<C");
+      delay(100);
+
       skalLade = true;
-      motors.setSpeeds(50, 0);
+      ladeSvingTid = elapsedTime;
+      motors.setSpeeds(250, -100);
+      buzzer.play(">C");
+      delay(500);
     } 
 
 
