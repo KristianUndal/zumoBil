@@ -1,21 +1,20 @@
 #include <Arduino.h>
+#include <Zumo32U4.h>
+#include "calibrateSensors.h"
+#include "lineFollowing.h"
 
-unsigned long elapsedTime = 0;
+extern int error;
+extern int lastError;
 
-// put function declarations here:
-int myFunction(int, int);
+void setup(){
+  initSensors();
+  
+  delay(5000);
 
-void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+  spinAndCalibrate();
+
 }
-
-void loop() {
-  // put your main code here, to run repeatedly:
-  elapsedTime = millis();
-}
-
-// put function definitions here:hei 
-int myFunction(int x, int y) {
-  return x + y;
+void loop(){
+  
+  followLine();
 }
