@@ -1,10 +1,4 @@
-#include <Arduino.h>
-#include <Zumo32U4.h>
 #include "lineFollowing.h"
-#include "calibrateSensors.h"
-
-extern Zumo32U4LineSensors lineSensors;
-extern Zumo32U4Motors motors;
 
 #define MIDDLE_OF_LINE 2000
 #define BASE_SPEED 400
@@ -24,7 +18,6 @@ static void readSensors(){
     //tall mellom -2000 og 2000
     error = position - MIDDLE_OF_LINE;
 }
-
 
 static int directionChange(){
     //PID kontrolleringsformel

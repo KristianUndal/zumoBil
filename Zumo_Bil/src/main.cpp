@@ -1,20 +1,25 @@
 #include <Arduino.h>
+#include "battery.h"
 #include <Zumo32U4.h>
-#include "calibrateSensors.h"
-#include "lineFollowing.h"
+#include "proximitySensors.h"
 
-extern int error;
-extern int lastError;
+// Merged with battery branch
 
-void setup(){
-  initSensors();
-  
-  delay(5000);
+unsigned long elapsedTime = 0;
 
-  spinAndCalibrate();
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);
 
+  displayBatteryPercentage();
 }
-void loop(){
-  
-  followLine();
+
+void loop() {
+  // Elapsed time since start of program
+  elapsedTime = millis();
+
+  // Update battery state
+  updateBattery();
+  updateObstacle();
+  delay(5);
 }
