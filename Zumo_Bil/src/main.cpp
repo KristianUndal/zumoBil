@@ -75,6 +75,7 @@ void setup() {
 void loop() {
   elapsedTime = millis();
 
+
   // Batteriet trengs ikke oppdateres ofte.
   if((elapsedTime - sistBatterimaling) > 500){
     sistBatterimaling = elapsedTime;
@@ -96,8 +97,6 @@ void loop() {
   if((elapsedTime - ladeSvingTid) > 1500){
     followLine();
   }
-
-  
 
   
 

@@ -4,8 +4,6 @@
 #include <Arduino.h>
 #include <Zumo32U4.h>
 
-
-extern Zumo32U4OLED display;
 extern Zumo32U4Encoders encoders;
 
 // Battery variables
