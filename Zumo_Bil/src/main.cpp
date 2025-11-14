@@ -21,6 +21,7 @@
 #include "lineFollowing.h"
 #include "proximitySensors.h"
 #include "display.h"
+#include "buzzer.h"
 
 
 //--- Objekter --- 
@@ -35,6 +36,8 @@ Zumo32U4Encoders encoders;
 //--- Globale variabler ---
 // Generelt
 unsigned long elapsedTime = 0; // Millisekunder siden programmets start
+int maksHastighet = 100;
+
 
 // Batteri
 unsigned long sistBatterimaling = 0;
@@ -43,6 +46,7 @@ int batteryPercentage; //Batteri målt i sekunder
 
 // Avstandsmåling
 unsigned long sistAvstandsmaling = 0;
+bool hinder = false;
 
 // Lading
 bool skalLade = false;
@@ -53,8 +57,6 @@ unsigned long skjermtid = 0;
 unsigned long sving = 0;
 
 void setup() {
-  Serial.begin(9600);
-  
   // Vi bruker fem linjesensorer
   lineSensors.initFiveSensors();
   
@@ -67,35 +69,28 @@ void setup() {
   delay(1000); // Venter litt etter brukeren har sluppet knappen. Delay er helt ok i setup for ingenting annet skal skje
 
   spinAndCalibrate();
-  buzzer.play("MSAAA"); // Varsel om at roboten er ferdig kalibrert
+  //buzzer.play("MSAAA"); // Varsel om at roboten er ferdig kalibrert
   delay(1500); // Pause for sikkerhets skyld
-
 }
 
 void loop() {
   elapsedTime = millis();
 
+  updateBattery();
 
-  // Batteriet trengs ikke oppdateres ofte.
-  if((elapsedTime - sistBatterimaling) > 500){
-    sistBatterimaling = elapsedTime;
-    updateBattery();
-  }
-  
 
   // Avstandssensorkode. 
-  // Bør ikke kjøres mer enn hvert 15ms, kjører 20ms for sikkerhets skyld.
-  // Dokumentasjonen forklarer at prox.read() funksjonen bruker ~2.15ms per lysstyrke den
-  // tester, pluss 0.62ms. Som standard er det 6 lysstyrker; (6 * 2.15) + 0.62 = 13.52ms < 20ms
-  if((elapsedTime - sistAvstandsmaling) > 20){
-    updateObstacle(); // Stopper om kjøretøyet er for nær en hindring
-  }
+  hinder = updateObstacle(); // Stopper om kjøretøyet er for nær en hindring
 
 
   // All linjefølging håndteres av denne funksjonen. Den deaktiveres et øyeblikk mens vi svinger av veien for 
   // å ikke skape problemer 
-  if((elapsedTime - ladeSvingTid) > 1500){
-    followLine();
+  
+  if(!hinder){
+    followLine(maksHastighet);  
+    //distanceAlert();
+  }else{
+    motors.setSpeeds(0, 0);
   }
 
   

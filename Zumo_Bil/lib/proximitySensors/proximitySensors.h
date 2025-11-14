@@ -10,6 +10,8 @@ void initObstacleModule();
 
 void setDesiredSpeeds();
 
-void updateObstacle();
+bool updateObstacle();
+
+void distanceAlert();
 
 #endif

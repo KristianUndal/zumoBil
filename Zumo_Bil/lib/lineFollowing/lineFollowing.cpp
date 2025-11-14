@@ -8,8 +8,8 @@ int error;
 int lastError = 0;
 
 //endre disse for å tune styringen
-#define PROPORTIONAL_CONSTANT 0.25
-#define DERIVATIVE_CONSTANT 6
+#define PROPORTIONAL_CONSTANT 0.2
+#define DERIVATIVE_CONSTANT 1.5
 
 static void readSensors(){
     //tall mellom 0 og 4000

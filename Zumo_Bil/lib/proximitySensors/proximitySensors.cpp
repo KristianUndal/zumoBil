@@ -49,36 +49,31 @@ static bool shouldBeStopped(uint8_t proxSum, bool currentlyStopped) {
         return true; // Stopp hvis batteriet er tomt
     }
     if (!currentlyStopped) {
-        writeToScreen(String(proxSum), 1);
+        //writeToScreen(String(proxSum), 1);
         return proxSum >= STOP_THRESHOLD;
     }
     else {
-        writeToScreen("STOPPED", 1);
+        //writeToScreen("STOPPED", 1);
         return (proxSum >= RELEASE_THRESHOLD);
     }
 }
 
-void updateObstacle() {
+bool updateObstacle() {
     uint8_t proxSum = readFrontProximitySum();
     bool mustStop = shouldBeStopped(proxSum, isStopped);
     
-    if (mustStop && !isStopped) {
-        stopMotorsNow();
-        isStopped = true;
-    }
-    else if (!mustStop && isStopped){
-        startMotorsNow(currentLeftSpeed, currentRightSpeed);
-        isStopped = false;
-    }
-    else if (!mustStop && !isStopped) {
-        startMotorsNow(currentLeftSpeed, currentRightSpeed);
-        if (proxSum > 5) {
+    return mustStop;
+}
+
+void distanceAlert(){
+    uint8_t proxSum = readFrontProximitySum();
+    
+    if (proxSum > 5) {
         int buzzFreq = 1000/((proxSum-5)*2);
         if (elapsedTime > (lastBuzzerTime + buzzFreq)) {
-        lastBuzzerTime = elapsedTime;
-        activateBuzzer();
+            lastBuzzerTime = elapsedTime;
+            activateBuzzer();
         }
-    }
     }
 }
 
