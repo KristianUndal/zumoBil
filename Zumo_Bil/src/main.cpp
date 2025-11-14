@@ -20,6 +20,7 @@
 #include "ladestasjon.h"
 #include "lineFollowing.h"
 #include "proximitySensors.h"
+#include "display.h"
 
 
 //--- Objekter --- 
@@ -56,6 +57,7 @@ void setup() {
   
   // Vi bruker fem linjesensorer
   lineSensors.initFiveSensors();
+  
   initObstacleModule();
 
   // Venter med kalibrasjon til brukeren trykker knappen 
@@ -127,6 +129,7 @@ void loop() {
       buzzer.play(">C");
       delay(500);
     } 
+    break;
 
 
 
