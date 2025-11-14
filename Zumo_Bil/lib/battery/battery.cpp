@@ -1,20 +1,25 @@
 #include "battery.h"
 #include "display.h"
 
-extern int leftEncoderCount;
-extern int rightEncoderCount;
+
+/*
+Disse er i headerfilen definert som extern, og forventer da at variablene settes i en annen fil. Jeg 
+har bare kommentert de vekk, men de erklæres i headerfilen og initsialiseres i main.cpp
+*/
 
 // Set battery charge to full at start of program
-volatile double batteryCharge = FULL_BATTERY;
+//volatile double batteryCharge = FULL_BATTERY;
 // Set battery percentage to full at start of program
-int batteryPercentage = 100;
+//int batteryPercentage = 100;
 
 // Last time of idleBattery() update
 unsigned long lastIdleUpdate = 0;
 
 // Update battery charge when wheel encoders move, interrupts loop()
 void driveBattery() {
-    
+    int leftEncoderCount = encoders.getCountsAndResetLeft();
+    int rightEncoderCount = encoders.getCountsAndResetRight();
+  
     int encodersCount = abs(leftEncoderCount) + abs(rightEncoderCount);
     batteryCharge -= encodersCount * DRIVE_COST_ROTATION/900;
 }
@@ -40,6 +45,7 @@ void displayBatteryPercentage() {
         writeToScreen(batteryString, 0);
     }
 }
+
 
 void updateBattery() {
     // Subtracts IDLE_COST from batteryCharge every IDLE_TIME ms

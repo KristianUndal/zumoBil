@@ -1,19 +1,21 @@
 #include <Arduino.h>
 #include <Zumo32U4.h>
-#include <Wire.h>
 #include "proximitySensors.h"
+#include "display.h"
+#include "battery.h"
+#include "buzzer.h"
 
-#define STOP_THRESHOLD 10
-#define RELEASE_THRESHOLD 7
-#define DEFAULT_LEFRT_SPEED 100
+#define STOP_THRESHOLD 11
+#define RELEASE_THRESHOLD 10
+#define DEFAULT_LEFT_SPEED 100
 #define DEFAULT_RIGHT_SPEED 100
 
-Zumo32U4Motors motors;
-Zumo32U4ProximitySensors prox;
 
-int currentLeftSpeed = DEFAULT_LEFRT_SPEED;
+int currentLeftSpeed = DEFAULT_LEFT_SPEED;
 int currentRightSpeed = DEFAULT_RIGHT_SPEED;
 bool isStopped = false;
+
+unsigned long lastBuzzerTime = 0;
 
 // Initialize proximity sensor
 void initObstacleModule() {
@@ -21,7 +23,7 @@ void initObstacleModule() {
 }
 
 // Read front proximity sensors and return sum of left and right hits
-uint8_t readFrontProximitySum() {
+static uint8_t readFrontProximitySum() {
   prox.read();
   uint8_t leftHits  = prox.countsFrontWithLeftLeds();
   uint8_t rightHits = prox.countsFrontWithRightLeds();
@@ -33,28 +35,33 @@ void setDesiredSpeeds(int leftSpeed, int rightSpeed) {
     currentRightSpeed = rightSpeed;
 }
 
-void startMotorsNow(int leftSpeed, int rightSpeed) {
+static void startMotorsNow(int leftSpeed, int rightSpeed) {
     motors.setSpeeds(leftSpeed, rightSpeed);
 }
 
-void stopMotorsNow() {
+static void stopMotorsNow() {
     motors.setSpeeds(0, 0);
 }
 
 // Decide whether to stop or start motors based on proximity sensor readings
-bool shouldBeStopped(uint8_t proxSum, bool currentlyStopped) {
+static bool shouldBeStopped(uint8_t proxSum, bool currentlyStopped) {
+    if (batteryCharge == 0) {
+        return true; // Stopp hvis batteriet er tomt
+    }
     if (!currentlyStopped) {
+        writeToScreen(String(proxSum), 1);
         return proxSum >= STOP_THRESHOLD;
     }
     else {
+        writeToScreen("STOPPED", 1);
         return (proxSum >= RELEASE_THRESHOLD);
     }
 }
 
-void updateObstacle(unsigned long elapsedTime) {
+void updateObstacle() {
     uint8_t proxSum = readFrontProximitySum();
     bool mustStop = shouldBeStopped(proxSum, isStopped);
-
+    
     if (mustStop && !isStopped) {
         stopMotorsNow();
         isStopped = true;
@@ -65,6 +72,13 @@ void updateObstacle(unsigned long elapsedTime) {
     }
     else if (!mustStop && !isStopped) {
         startMotorsNow(currentLeftSpeed, currentRightSpeed);
+        if (proxSum > 5) {
+        int buzzFreq = 1000/((proxSum-5)*2);
+        if (elapsedTime > (lastBuzzerTime + buzzFreq)) {
+        lastBuzzerTime = elapsedTime;
+        activateBuzzer();
+        }
+    }
     }
 }
 

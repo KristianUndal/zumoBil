@@ -12,4 +12,4 @@ void clearScreen();
 // Write string to screen
 void writeToScreen(String str, int line);
 
-#endif
+#endif // __DISPLAY__
