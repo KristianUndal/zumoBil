@@ -20,6 +20,7 @@
 #include "ladestasjon.h"
 #include "lineFollowing.h"
 #include "proximitySensors.h"
+#include "display.h"
 
 
 //--- Objekter --- 
@@ -56,6 +57,7 @@ void setup() {
   
   // Vi bruker fem linjesensorer
   lineSensors.initFiveSensors();
+  
   initObstacleModule();
 
   // Venter med kalibrasjon til brukeren trykker knappen 
@@ -72,6 +74,7 @@ void setup() {
 
 void loop() {
   elapsedTime = millis();
+
 
   // Batteriet trengs ikke oppdateres ofte.
   if((elapsedTime - sistBatterimaling) > 500){
@@ -94,8 +97,6 @@ void loop() {
   if((elapsedTime - ladeSvingTid) > 1500){
     followLine();
   }
-
-  
 
   
 

@@ -1,7 +1,6 @@
 #include "lineFollowing.h"
 
 #define MIDDLE_OF_LINE 2000
-#define BASE_SPEED 400
 #define NUM_SENSORS 5
 unsigned int lineSensorValues[NUM_SENSORS]; 
 
@@ -26,14 +25,14 @@ static int directionChange(){
     return value;
 }
 
-void followLine(){
+void followLine(int max_speed){
     readSensors();
     int speedDifference = directionChange();
 
-    int leftSpeed = BASE_SPEED + speedDifference;
-    int rightSpeed = BASE_SPEED - speedDifference;
+    int leftSpeed = max_speed + speedDifference;
+    int rightSpeed = max_speed - speedDifference;
 
-    leftSpeed = constrain(leftSpeed,0,BASE_SPEED);
-    rightSpeed = constrain(rightSpeed,0,BASE_SPEED);
+    leftSpeed = constrain(leftSpeed,0,max_speed);
+    rightSpeed = constrain(rightSpeed,0,max_speed);
     motors.setSpeeds(leftSpeed, rightSpeed);
 }

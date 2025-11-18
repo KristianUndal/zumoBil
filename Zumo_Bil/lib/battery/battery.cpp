@@ -17,10 +17,10 @@ unsigned long lastIdleUpdate = 0;
 
 // Update battery charge when wheel encoders move, interrupts loop()
 void driveBattery() {
-    int leftEncoder = encoders.getCountsAndResetLeft();
-    int rightEncoder = encoders.getCountsAndResetRight();
-    
-    int encodersCount = abs(leftEncoder) + abs(rightEncoder);
+    int leftEncoderCount = encoders.getCountsAndResetLeft();
+    int rightEncoderCount = encoders.getCountsAndResetRight();
+  
+    int encodersCount = abs(leftEncoderCount) + abs(rightEncoderCount);
     batteryCharge -= encodersCount * DRIVE_COST_ROTATION/900;
 }
 
@@ -57,7 +57,4 @@ void updateBattery() {
     if (batteryCharge < 0) {
         batteryCharge = 0;
     }
-
-    // Update battery percentage on screen
-    displayBatteryPercentage();
 }

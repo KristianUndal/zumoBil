@@ -9,6 +9,6 @@ extern Zumo32U4LineSensors lineSensors;
 extern Zumo32U4Motors motors;
 
 // Håndterer all linjefølging
-void followLine();
+void followLine(int max_speed);
 
 #endif

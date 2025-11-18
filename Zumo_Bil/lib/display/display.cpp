@@ -3,10 +3,6 @@
 #include "display.h"
 
 
-volatile double batteryCharge = 100;
-int batteryPercentage = 100;
-
-
 void clearScreen() {
     // Clear screen
     display.clear();
