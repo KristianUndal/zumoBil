@@ -56,6 +56,9 @@ int ladeGrense = 95;
 unsigned long skjermtid = 0;
 unsigned long sving = 0;
 
+// Saktesone
+bool iSakteSone = false;
+
 void setup() {
   // Vi bruker fem linjesensorer
   lineSensors.initFiveSensors();
@@ -125,6 +128,16 @@ void loop() {
     } 
     break;
 
+  case SAKTE:
+    if (iSakteSone){
+      maksHastighet = 100;
+      iSakteSone = false;
+    }
+    else if (!iSakteSone){
+      maksHastighet = 50;
+      iSakteSone = true;
+    }
+    break;
 
 
   default:
