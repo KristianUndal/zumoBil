@@ -10,6 +10,7 @@ Ladestasjon library for Zumo32u4
 
 enum veimarkering{
     INGEN,
+    RASK,
     LADESTASJON,
     SAKTE,
     LYSKRYSS

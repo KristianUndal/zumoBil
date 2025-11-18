@@ -41,7 +41,7 @@ veimarkering paMarkering(Zumo32U4LineSensors &_linjesensor, int antallSensorer, 
     {
     //Ingen over grenseverdi
     case 0:
-        return INGEN;
+        return RASK;
         break;
     
     //Høyre over grenseverdi

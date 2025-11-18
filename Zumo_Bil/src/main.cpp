@@ -100,6 +100,10 @@ void loop() {
 
   // Veimarkeringer 
   switch (paMarkering(lineSensors, 5, 25)) {
+
+  case RASK:
+    maksHastighet = 350;
+  break;
   
   case LADESTASJON:
 
@@ -129,14 +133,7 @@ void loop() {
     break;
 
   case SAKTE:
-    if (iSakteSone){
-      maksHastighet = 100;
-      iSakteSone = false;
-    }
-    else if (!iSakteSone){
-      maksHastighet = 50;
-      iSakteSone = true;
-    }
+    maksHastighet = 100;
     break;
 
 
