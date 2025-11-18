@@ -127,6 +127,11 @@ void loop() {
       buzzer.play(">C");
       delay(500);
     } 
+    break;
+
+  case SAKTE:
+    
+    break;
 
 
 
