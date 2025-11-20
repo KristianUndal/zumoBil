@@ -20,7 +20,7 @@ veimarkering paMarkering(Zumo32U4LineSensors &_linjesensor, int antallSensorer, 
 
     //Dersom vi ikke leser noen ting returnerer vi. Da slipper vi å oppdatere kontaktvariablen unødvendig
     if(overGrense == 0){
-        return INGEN;
+        return RASK;
     }
 
     //Vi oppdaterer kun første kontakt variabelen dersom det er gått mer enn en halvt sekund siden sist avlesing.
@@ -39,11 +39,6 @@ veimarkering paMarkering(Zumo32U4LineSensors &_linjesensor, int antallSensorer, 
     
     switch (overGrense)
     {
-    //Ingen over grenseverdi
-    case 0:
-        return RASK;
-        break;
-    
     //Høyre over grenseverdi
     case 1:
         return LADESTASJON;

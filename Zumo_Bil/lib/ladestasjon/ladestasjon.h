@@ -6,7 +6,7 @@ Ladestasjon library for Zumo32u4
 #define ladestasjon_h
 
 #include <Arduino.h>
-#include <Zumo32u4.h>
+#include <Zumo32U4.h>
 
 enum veimarkering{
     INGEN,

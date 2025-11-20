@@ -34,7 +34,7 @@ void setDesiredSpeeds(int leftSpeed, int rightSpeed) {
     currentLeftSpeed = leftSpeed;
     currentRightSpeed = rightSpeed;
 }
-
+/*
 static void startMotorsNow(int leftSpeed, int rightSpeed) {
     motors.setSpeeds(leftSpeed, rightSpeed);
 }
@@ -42,7 +42,7 @@ static void startMotorsNow(int leftSpeed, int rightSpeed) {
 static void stopMotorsNow() {
     motors.setSpeeds(0, 0);
 }
-
+*/
 // Decide whether to stop or start motors based on proximity sensor readings
 static bool shouldBeStopped(uint8_t proxSum, bool currentlyStopped) {
     if (batteryCharge == 0) {

@@ -2,7 +2,7 @@
 // Globale definisjoner for batteriet. Fjern kommentar for å omdefinere, ellers standard
 //#define FULL_BATTERY //Standard 100.0
 //#define DRIVE_COST_ROTATION //Standard 1.0
-//#define IDLE_COST_MINUTE //Standard 60.0
+#define IDLE_COST_MINUTE 200 //Standard 60.0
 //#define IDLE_TIME //Standard 1000
 
 //Maks hastighet for kjøretøyet. Fjern kommentar for å omdefinere, ellers standard
