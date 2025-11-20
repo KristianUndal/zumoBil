@@ -37,6 +37,7 @@ Zumo32U4Encoders encoders;
 // Generelt
 unsigned long elapsedTime = 0; // Millisekunder siden programmets start
 int maksHastighet = 100;
+int _lastValue = 0;
 
 
 // Batteri
