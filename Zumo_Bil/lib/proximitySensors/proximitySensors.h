@@ -12,6 +12,6 @@ void setDesiredSpeeds();
 
 bool updateObstacle();
 
-void distanceAlert();
+void distanceAlert(uint8_t proxSum);
 
 #endif

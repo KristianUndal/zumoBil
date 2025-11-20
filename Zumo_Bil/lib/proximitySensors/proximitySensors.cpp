@@ -61,13 +61,12 @@ static bool shouldBeStopped(uint8_t proxSum, bool currentlyStopped) {
 bool updateObstacle() {
     uint8_t proxSum = readFrontProximitySum();
     bool mustStop = shouldBeStopped(proxSum, isStopped);
+    distanceAlert(proxSum);
     
     return mustStop;
 }
 
-void distanceAlert(){
-    uint8_t proxSum = readFrontProximitySum();
-    
+void distanceAlert(uint8_t proxSum){
     if (proxSum > 5) {
         int buzzFreq = 1000/((proxSum-5)*2);
         if (elapsedTime > (lastBuzzerTime + buzzFreq)) {

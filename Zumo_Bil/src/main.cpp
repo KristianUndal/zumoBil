@@ -2,13 +2,16 @@
 // Globale definisjoner for batteriet. Fjern kommentar for å omdefinere, ellers standard
 //#define FULL_BATTERY //Standard 100.0
 //#define DRIVE_COST_ROTATION //Standard 1.0
-#define IDLE_COST_MINUTE 200 //Standard 60.0
+//#define IDLE_COST_MINUTE //Standard 60.0
 //#define IDLE_TIME //Standard 1000
 
 //Maks hastighet for kjøretøyet. Fjern kommentar for å omdefinere, ellers standard
 //#define BASE_SPEED //Standard 100
 
 #define KLIKK_I_SVING 909 //Antall klikk i rotary encoder for å svinge av til ladestasjonen
+
+#define MAX_HASTIGHET 350
+#define MIN_HASTIGHET 100
 
 //--- Includes ---
 #include <Arduino.h>
@@ -36,7 +39,7 @@ Zumo32U4Encoders encoders;
 //--- Globale variabler ---
 // Generelt
 unsigned long elapsedTime = 0; // Millisekunder siden programmets start
-int maksHastighet = 100;
+int hastighet = 100;
 int _lastValue = 0;
 
 
@@ -91,8 +94,7 @@ void loop() {
   // å ikke skape problemer 
   
   if(!hinder){
-    followLine(maksHastighet);  
-    //distanceAlert();
+    followLine(hastighet);  
   }else{
     motors.setSpeeds(0, 0);
   }
@@ -103,7 +105,7 @@ void loop() {
   switch (paMarkering(lineSensors, 5, 25)) {
 
   case RASK:
-    maksHastighet = 350;
+    hastighet = MAX_HASTIGHET;
   break;
   
   case LADESTASJON:
@@ -134,7 +136,7 @@ void loop() {
     break;
 
   case SAKTE:
-    maksHastighet = 100;
+    hastighet = MIN_HASTIGHET;
     break;
 
 
